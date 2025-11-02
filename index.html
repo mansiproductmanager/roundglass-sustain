@@ -3,34 +3,233 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Stories — Roundglass (static clone)</title>
+  <title>Stories — Roundglass Sustain (Static Clone)</title>
   <style>
-    body { font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial; margin: 0; padding: 0; background:#fff; color:#111; }
-    header { padding:24px; border-bottom:1px solid #eee; }
-    .container{max-width:1100px;margin:28px auto;padding:0 16px;}
-    h1 { margin:0 0 8px; font-size:28px; }
-    .filters { display:flex; gap:8px; margin:12px 0 24px; flex-wrap:wrap; }
-    .filter { padding:6px 10px; border-radius:6px; background:#f3f6f4; cursor:pointer; }
-    .grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:18px; }
-    .card { border:1px solid #eee; border-radius:8px; overflow:hidden; background:#fff; box-shadow:0 6px 18px rgba(10,10,10,0.03); display:flex; flex-direction:column; }
-    .card img { width:100%; height:170px; object-fit:cover; display:block; }
-    .card-body{ padding:12px 14px; flex:1; display:flex; flex-direction:column; }
-    .meta { font-size:12px; color:#6b6b6b; margin-bottom:8px; }
-    .title { font-weight:600; margin:0 0 8px; font-size:16px; line-height:1.2; }
-    .read { margin-top:auto; text-decoration:none; color:#00695c; font-weight:600; }
-    footer { text-align:center; padding:22px 0; color:#666; font-size:13px; }
+    /* Base */
+    body {
+      font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, Arial;
+      margin: 0;
+      padding: 0;
+      background: #fff;
+      color: #111;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    /* --- HEADER --- */
+    .rg-header {
+      border-bottom: 1px solid #eee;
+      padding: 14px 0;
+      position: sticky;
+      top: 0;
+      width: 100%;
+      z-index: 1000;
+
+    background: black;
+    }
+    .rg-header-inner {
+      max-width: 1150px;
+      margin: 0 auto;
+      padding: 0 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .rg-logo img { height: 40px; width: auto; }
+    .rg-nav { display: none; }
+    .rg-nav-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      gap: 24px;
+    }
+    .rg-nav-list li a {
+      text-decoration: none;
+      color: #fff;
+      font-weight: 500;
+      transition: color 0.2s ease;
+    }
+    .rg-nav-list li a:hover { color: #00695c; }
+    .rg-header-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .rg-donate-btn {
+      background-color: #00695c;
+      color: #fff;
+      padding: 8px 14px;
+      border: none;
+      border-radius: 4px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+    }
+    .rg-donate-btn:hover { background-color: #004d40; }
+    .rg-menu-toggle {
+      background: none;
+      border: none;
+      font-size: 24px;
+      cursor: pointer;
+      display: block;
+    }
+    @media(min-width: 768px) {
+      .rg-nav { display: block; }
+      .rg-menu-toggle { display: none; }
+    }
+
+    /* --- HERO SECTION --- */
+    .hero {
+      position: relative;
+      height: 60vh;
+      background: url('https://res.cloudinary.com/roundglass/image/upload/f_auto/v1691645182/rg/collective/media/common-picturewing-female-detail-vivek-chandran-a_paut6u.jpg') center/cover no-repeat;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: white;
+    }
+    .hero::after {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0, 0, 0, 0.45);
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 700px;
+      padding: 0 20px;
+    }
+    .hero h1 {
+      font-size: 44px;
+      margin: 0 0 10px;
+      font-weight: 700;
+    }
+    .hero p {
+      font-size: 18px;
+      line-height: 1.5;
+      color: #f1f1f1;
+      margin: 0;
+    }
+
+    /* --- CONTENT --- */
+    .container {
+      max-width: 1100px;
+      margin: 40px auto;
+      padding: 0 16px;
+    }
+    .filters {
+      display: flex;
+      gap: 8px;
+      margin: 12px 0 24px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .filter {
+      padding: 6px 10px;
+      border-radius: 6px;
+      background: #f3f6f4;
+      cursor: pointer;
+      font-size: 14px;
+      transition: background 0.2s ease;
+    }
+    .filter:hover {
+      background: #e0f2f1;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 20px;
+    }
+    .card {
+      border: 1px solid #eee;
+      border-radius: 8px;
+      overflow: hidden;
+      background: #fff;
+      box-shadow: 0 6px 18px rgba(10, 10, 10, 0.03);
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.2s ease;
+    }
+    .card:hover { transform: translateY(-4px); }
+    .card img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      display: block;
+    }
+    .card-body {
+      padding: 12px 14px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .meta {
+      font-size: 12px;
+      color: #6b6b6b;
+      margin-bottom: 6px;
+    }
+    .title {
+      font-weight: 600;
+      margin: 0 0 10px;
+      font-size: 16px;
+      line-height: 1.3;
+    }
+    .read {
+      margin-top: auto;
+      text-decoration: none;
+      color: #00695c;
+      font-weight: 600;
+    }
+
+    footer {
+      text-align: center;
+      padding: 22px 0;
+      color: #666;
+      font-size: 13px;
+      border-top: 1px solid #eee;
+      margin-top: 40px;
+    }
   </style>
 </head>
-<body>
-  <header>
-    <div class="container">
-      <h1>Stories</h1>
-      <div style="color:#666">Wildlife stories and encounters — static clone</div>
-    </div>
-  </header>
 
+<body>
+  <!-- HEADER -->
+  <div class="rg-header">
+    <div class="rg-header-inner">
+      <a href="/" class="rg-logo">
+        <img src="https://roundglasssustain.com/images/v2/light-logo.svg" alt="RoundGlass Sustain">
+      </a>
+      <nav class="rg-nav">
+        <ul class="rg-nav-list">
+          <li><a href="https://roundglasssustain.com/stories/">Stories</a></li>
+          <li><a href="https://roundglasssustain.com/species/">Species</a></li>
+          <li><a href="https://roundglasssustain.com/habitats/">Habitats</a></li>
+          <li><a href="https://roundglasssustain.com/films/">Films</a></li>
+          <li><a href="https://roundglasssustain.com/get-involved/">Get Involved</a></li>
+        </ul>
+      </nav>
+      <div class="rg-header-actions">
+        <button class="rg-donate-btn">Donate</button>
+        <button class="rg-menu-toggle" aria-label="Menu">☰</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Wildlife Stories</h1>
+      <p>Explore stories from India’s forests, wetlands, and coastlines — bringing nature closer to you.</p>
+    </div>
+  </section>
+
+  <!-- MAIN GRID -->
   <main class="container">
-    <div class="filters" aria-hidden="true">
+    <div class="filters">
       <div class="filter">All Stories</div>
       <div class="filter">Travel</div>
       <div class="filter">Urban Jungle</div>
@@ -39,42 +238,54 @@
     </div>
 
     <section class="grid">
-      <!-- Card 1 -->
       <article class="card">
-        <!-- Replace the placeholder URL below with the actual public image link -->
-        <img src="https://via.placeholder.com/1200x800?text=When+Flamingos+–+replace+me" alt="When Flamingos Frolic and Feed in the Talawe Wetlands">
-        <div class="card-body">
-          <div class="meta">Urban Jungle</div>
-          <h2 class="title">When Flamingos Frolic and Feed in the Talawe Wetlands</h2>
-          <a class="read" href="https://roundglasssustain.com/urban-jungle/flamingos-talawe-wetlands" target="_blank" rel="noopener">Read →</a>
-        </div>
-      </article>
-
-      <!-- Card 2 (example entry) -->
-      <article class="card">
-        <img src="https://via.placeholder.com/1200x800?text=Looking+for+Eyeshine+–+replace+me" alt="Looking for Eyeshine: A Tiny Wildcat and its Neighbours in Jawai">
-        <div class="card-body">
-          <div class="meta">Habitat</div>
-          <h2 class="title">Looking for Eyeshine: A Tiny Wildcat and its Neighbours in Jawai</h2>
-          <a class="read" href="https://roundglasssustain.com/habitats/jawai" target="_blank" rel="noopener">Read →</a>
-        </div>
-      </article>
-
-      <!-- Card 3 -->
-      <article class="card">
-        <img src="https://via.placeholder.com/1200x800?text=High+Life+Gliding+Frogs+–+replace+me" alt="High Life: Gliding Frogs of the Western Ghats">
+        <img src="https://res.cloudinary.com/roundglass/image/upload/f_auto/q_auto/f_auto/c_limit,w_auto:breakpoints_200_2560_100_5:1265/v1691645641/rg/collective/media/common-picturewing-female-detail-vivek-chandran-a-1691645640547.jpg" alt="Common Picturewing Dragonfly">
         <div class="card-body">
           <div class="meta">Species</div>
-          <h2 class="title">High Life: Gliding Frogs of the Western Ghats</h2>
-          <a class="read" href="https://roundglasssustain.com/species/gliding-frogs-western-ghats" target="_blank" rel="noopener">Read →</a>
+          <h2 class="title">Common Picturewing Dragonfly — Gliders of Indian Wetlands</h2>
+          <a class="read" href="https://roundglasssustain.com/species/common-picturewing" target="_blank">Read →</a>
         </div>
       </article>
 
+      <article class="card">
+        <img src="https://res.cloudinary.com/roundglass/image/upload/f_auto/q_auto/f_auto/c_limit,w_auto:breakpoints_200_2560_100_5:1265/v1597312991/roundglass/sustain/spotted-owlet-dhritiman-mukherjee_swebe9.jpg" alt="Owls of India">
+        <div class="card-body">
+          <div class="meta">Photo Story</div>
+          <h2 class="title">Owls of India — Night Watchers of the Wild</h2>
+          <a class="read" href="https://roundglasssustain.com/photo-stories/owls-india" target="_blank">Read →</a>
+        </div>
+      </article>
+
+      <article class="card">
+        <img src="https://res.cloudinary.com/roundglass/image/upload/w_1200,ar_16:9,c_fill,g_face,f_auto/v1697522895/rg/collective/media/giant-honey-bee-apis-dorsata-vidheesha-sulakkana-shutterstock-1697522895020.jpg" alt="Rock Bees Vision">
+        <div class="card-body">
+          <div class="meta">Wild Vault</div>
+          <h2 class="title">Rock Bees: Nature’s Architects of Honeycombs</h2>
+          <a class="read" href="https://roundglasssustain.com/wild-vault/rock-bees-vision" target="_blank">Read →</a>
+        </div>
+      </article>
     </section>
   </main>
 
   <footer>
-    Content cloned for local development/testing. Original: Roundglass Sustain — Stories. :contentReference[oaicite:2]{index=2}
+    Static clone for learning/demo. Original content © 
+    <a href="https://roundglasssustain.com/" target="_blank">RoundGlass Sustain</a>.
   </footer>
+  <script type="text/javascript">
+  (function(d, t) {
+      var v = d.createElement(t), s = d.getElementsByTagName(t)[0];
+      v.onload = function() {
+        window.voiceflow.chat.load({
+          verify: { projectID: '69023dbf8e3ce6723e377cc1' },
+          url: 'https://general-runtime.voiceflow.com',
+          versionID: 'production',
+          voice: {
+            url: "https://runtime-api.voiceflow.com"
+          }
+        });
+      }
+      v.src = "https://cdn.voiceflow.com/widget-next/bundle.mjs"; v.type = "text/javascript"; s.parentNode.insertBefore(v, s);
+  })(document, 'script');
+</script>
 </body>
 </html>
